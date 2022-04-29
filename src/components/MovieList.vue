@@ -56,8 +56,8 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
 
-  justify-content: space-evenly;
-  align-items: center;
+  // justify-content: space-evenly;
+  align-items: flex-start;
   height: 100%;
   width: 100%;
   margin-top: 100px;
@@ -65,7 +65,7 @@ export default {
   padding: 20px;
 
   &__item {
-    flex-grow: 1;
+    // flex-grow: 1;
     height: 300px;
     width: 450px;
     border: 1px solid rgb(142, 142, 142);
