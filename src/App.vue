@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header></Header>
-    <MovieList v-if="movieList" :movieList="movieList"></MovieList>
+    <MovieList :actionable="true" v-if="movieList" :movieList="movieList"></MovieList>
     <Modal></Modal>
   </div>
 </template>

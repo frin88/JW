@@ -2,7 +2,7 @@
   <transition name="slide">
     <div v-if="isModalOpen" class="modal">
       <button class="modal--close" @click="toggleModal()">X</button>
-      <MovieList :movieList="movieList"></MovieList>
+      <MovieList :actionable="false" :movieList="movieList"></MovieList>
     </div>
   </transition>
 </template>

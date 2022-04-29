@@ -19,7 +19,7 @@
             {{ m.releaseYear }}
           </div>
         </div>
-        <button :disabled="m.inWatchList" @click="addToWatchList(m)">
+        <button v-if="actionable" :disabled="m.inWatchList" @click="addToWatchList(m)">
           Add to Watchlist
         </button>
       </div>
@@ -33,30 +33,19 @@ export default {
   name: "movieList",
 
   props: {
-    movieList:{
+    movieList: {
       type: Array,
-      required: true
-    } 
+      required: true,
+    },
+    actionable: {
+      type: Boolean,
+      default: true,
+    },
   },
   methods: {
     ...mapActions({
       addToWatchList: "data/addItemToWatchList",
     }),
-  },
-  computed: {
-    // movieList() {
-    //   // This logic can be overridden as a props in the component
-    //   if (this.isModalOpen) {
-    //     return this.watchList;
-    //   } else {
-    //     return this.resultList;
-    //   }
-    // },
-    // ...mapGetters({
-    //   // resultList: "data/resultList",
-    //   // watchList: "data/watchList",
-    //   // isModalOpen: "ui/isModalOpen",
-    // }),
   },
 };
 </script>
