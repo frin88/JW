@@ -1,0 +1,107 @@
+
+<template>
+  <div class="movies">
+    <div v-for="m in movieList" class="movies__item" :key="m.id">
+      <div
+        role="img"
+        aria-label="movie-cover"
+        class="movies__item--cover"
+        :style="{
+          backgroundImage: `url(${m.image})`,
+        }"
+      ></div>
+
+      <div class="movies__item__info">
+        <div class="movies__item__info--title">
+          {{ m.title }}
+        </div>
+        <div class="movies__item__info--year">
+          {{ m.releaseYear }}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { mapGetters } from "vuex";
+export default {
+  name: "movieList",
+  computed: {
+    ...mapGetters({
+      movieList: "data/resultList",
+    }),
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.movies {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  margin-top: 100px;
+  overflow: auto;
+  // background-color: aquamarine;
+  padding: 20px;
+
+  &__item {
+    flex-grow: 1;
+    height: 300px;
+    width: 450px;
+    border: 1px solid rgb(142, 142, 142);
+
+    background-color: transparent;
+    border-radius: 20px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
+      0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
+      0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
+
+    padding: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    margin: 15px;
+
+    &--cover {
+      min-width: 200px;
+      height: 90%;
+      border-radius: 5px;
+      flex-grow: 1;
+      background-position: center; /* Center the image */
+      background-repeat: no-repeat; /* Do not repeat the image */
+      background-size: cover; /* Resize the background image to cover the entire container */
+    }
+
+    &__info {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      margin-left: 15px;
+      padding: 5px 0;
+      height: 90%;
+      width: 100%;
+      color: white;
+      text-align: left;
+
+      &--title,
+      &--year {
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+
+      &--year {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+</style>
