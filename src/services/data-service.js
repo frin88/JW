@@ -84,7 +84,7 @@ async function fetchMovies(searchTerm) {
     //   `${process.env.VUE_APP_IMDB_BASE_URL}SearchMovie/${process.env.VUE_APP_IMDB_API_KEY}/${searchTerm}`
     // );
     // return resp.data;
-    await new Promise(r => setTimeout(r, 200));
+    await new Promise(r => setTimeout(r, 300));
 
     console.log(searchTerm);
     return data;

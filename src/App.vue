@@ -1,19 +1,28 @@
 <template>
   <div id="app">
     <Header></Header>
-    <MovieList></MovieList>
+    <MovieList v-if="movieList" :movieList="movieList"></MovieList>
+    <Modal></Modal>
   </div>
 </template>
 
 <script>
 import Header from "./components/Header.vue";
 import MovieList from "./components/MovieList.vue";
-
+import Modal from "./components/Modal.vue";
+import { mapGetters } from "vuex";
 export default {
   name: "App",
   components: {
     Header,
     MovieList,
+    Modal,
+  },
+  computed: {
+    ...mapGetters({
+      movieList: "data/resultList",
+      isModalOpen: "ui/isModalOpen",
+    }),
   },
 };
 </script>

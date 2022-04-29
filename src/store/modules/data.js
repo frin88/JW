@@ -40,7 +40,11 @@ const actions = {
     commit("setResultList", payload);
   },
   async doSearch({ commit }, payload) {
+
+    //[TODO] - add loading indicator
     let res = await fetchMovies(payload);
+    //[TODO] - remove loading indicator
+    
     //[TODO] - add error handling based on response errorMessage
     commit("setResultList", res.results);
   },

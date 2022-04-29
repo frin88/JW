@@ -28,18 +28,35 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 export default {
   name: "movieList",
+
+  props: {
+    movieList:{
+      type: Array,
+      required: true
+    } 
+  },
   methods: {
     ...mapActions({
       addToWatchList: "data/addItemToWatchList",
     }),
   },
   computed: {
-    ...mapGetters({
-      movieList: "data/resultList",
-    }),
+    // movieList() {
+    //   // This logic can be overridden as a props in the component
+    //   if (this.isModalOpen) {
+    //     return this.watchList;
+    //   } else {
+    //     return this.resultList;
+    //   }
+    // },
+    // ...mapGetters({
+    //   // resultList: "data/resultList",
+    //   // watchList: "data/watchList",
+    //   // isModalOpen: "ui/isModalOpen",
+    // }),
   },
 };
 </script>
@@ -104,9 +121,8 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        
-        &--title
-        {
+
+        &--title {
           font-size: 1.5rem;
           font-weight: bold;
         }

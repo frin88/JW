@@ -1,23 +1,23 @@
 <template>
   <header class="menu">
     <SearchBar></SearchBar>
-   
-    <button @click="openModal()">Your Watchlist  </button>
+
+    <button @click="openModal()">Your Watchlist</button>
   </header>
 </template>
 <script>
 import SearchBar from "./SearchBar.vue";
+import { mapActions } from "vuex";
 
 export default {
   components: {
     SearchBar,
   },
-  
 
   methods: {
-    openModal() {
-      console.log("openModal");
-    },
+    ...mapActions({
+      openModal: "ui/toggleModal",
+    }),
   },
 };
 </script>
@@ -36,7 +36,5 @@ export default {
   align-items: center;
 
   border-bottom: 1px solid #fff;
-
-
 }
 </style>

@@ -3,8 +3,9 @@ const state = {
 };
 
 const mutations = {
-  toggleModal(state, payload) {
-    state.isModalOpen = payload;
+  toggleModal(state) {
+    console.log("qui");
+    state.isModalOpen = !state.isModalOpen;
   },
 };
 
@@ -13,8 +14,8 @@ const getters = {
 };
 
 const actions = {
-  toggleModal({ commit }, payload) {
-    commit("toggleModal", payload);
+  toggleModal({ commit }) {
+    commit("toggleModal");
   },
 };
 

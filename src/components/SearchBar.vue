@@ -29,6 +29,7 @@ export default {
       set(val) {
         if (this.timeout) clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
+     
           if (val != "") {
             this.searchTerm = val;
             this.doSearch(val);
