@@ -1,16 +1,18 @@
 <template>
   <header class="menu">
     <SearchBar></SearchBar>
-    <button @click="openModal()">Your Watchlist</button>
+   
+    <button @click="openModal()">Your Watchlist  </button>
   </header>
 </template>
 <script>
-
 import SearchBar from "./SearchBar.vue";
+
 export default {
   components: {
     SearchBar,
   },
+  
 
   methods: {
     openModal() {
@@ -35,15 +37,6 @@ export default {
 
   border-bottom: 1px solid #fff;
 
-  button {
-    padding: 10px;
-    background-color: #fbc500;
-    border-radius: 5px;
 
-    display: flex;
-    align-content: center;
-    justify-content: center;
-
-  }
 }
 </style>

@@ -10,23 +10,32 @@
           backgroundImage: `url(${m.image})`,
         }"
       ></div>
-
-      <div class="movies__item__info">
-        <div class="movies__item__info--title">
-          {{ m.title }}
+      <div class="movies__item__content">
+        <div class="movies__item__content__info">
+          <div class="movies__item__content__info--title">
+            {{ m.title }}
+          </div>
+          <div class="movies__item__content__info--year">
+            {{ m.releaseYear }}
+          </div>
         </div>
-        <div class="movies__item__info--year">
-          {{ m.releaseYear }}
-        </div>
+        <button :disabled="m.inWatchList" @click="addToWatchList(m)">
+          Add to Watchlist
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "movieList",
+  methods: {
+    ...mapActions({
+      addToWatchList: "data/addItemToWatchList",
+    }),
+  },
   computed: {
     ...mapGetters({
       movieList: "data/resultList",
@@ -47,7 +56,6 @@ export default {
   width: 100%;
   margin-top: 100px;
   overflow: auto;
-  // background-color: aquamarine;
   padding: 20px;
 
   &__item {
@@ -75,15 +83,15 @@ export default {
       height: 90%;
       border-radius: 5px;
       flex-grow: 1;
-      background-position: center; /* Center the image */
-      background-repeat: no-repeat; /* Do not repeat the image */
-      background-size: cover; /* Resize the background image to cover the entire container */
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
     }
 
-    &__info {
+    &__content {
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
+      justify-content: space-between;
       align-items: flex-start;
       margin-left: 15px;
       padding: 5px 0;
@@ -92,14 +100,24 @@ export default {
       color: white;
       text-align: left;
 
-      &--title,
-      &--year {
-        font-size: 1.2rem;
-        font-weight: bold;
+      &__info {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        
+        &--title
+        {
+          font-size: 1.5rem;
+          font-weight: bold;
+        }
+
+        &--year {
+          font-size: 1rem;
+        }
       }
 
-      &--year {
-        font-size: 0.9rem;
+      button {
+        align-self: flex-end;
       }
     }
   }

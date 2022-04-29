@@ -21,11 +21,15 @@ const getters = {
     state.resultList.map((result) => {
       let Y = year_regex.exec(result.description);
       result.releaseYear = Y && Y[1] ? Y[1] : "";
+
+      let inWatchList = state.watchList.find((x) => x.id === result.id);
+      result.inWatchList = inWatchList ? true : false;
     });
 
     return state.resultList;
   },
   watchList: (state) => state.watchList,
+
 };
 
 const actions = {
@@ -36,7 +40,6 @@ const actions = {
     commit("setResultList", payload);
   },
   async doSearch({ commit }, payload) {
-    
     let res = await fetchMovies(payload);
     //[TODO] - add error handling based on response errorMessage
     commit("setResultList", res.results);

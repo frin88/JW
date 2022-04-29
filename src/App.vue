@@ -54,8 +54,23 @@ button {
   outline: none;
   white-space: nowrap;
 
+  // custom styles. i would normally put these in a scss file but this is a quick and dirty solution
+  padding: 10px;
+  background-color: #fbc500;
+  color: black;
+  border-radius: 5px;
+
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+
   &:hover:not(:disabled) {
     cursor: pointer;
+  }
+
+  &:disabled {
+    opacity: 0.5;
   }
 }
 
