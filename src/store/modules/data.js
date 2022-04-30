@@ -15,7 +15,8 @@ const mutations = {
 
 const getters = {
   resultList: (state) => {
-    // get release year from movie description
+
+    //get release year from movie description
     const year_regex = /\((\d*?)\)/;
 
     state.resultList.map((result) => {
@@ -25,11 +26,11 @@ const getters = {
       let inWatchList = state.watchList.find((x) => x.id === result.id);
       result.inWatchList = inWatchList ? true : false;
     });
+    
 
     return state.resultList;
   },
   watchList: (state) => state.watchList,
-
 };
 
 const actions = {
@@ -44,7 +45,7 @@ const actions = {
     //[TODO] - add loading indicator
     let res = await fetchMovies(payload);
     //[TODO] - remove loading indicator
-    
+
     //[TODO] - add error handling based on response errorMessage
     commit("setResultList", res.results);
   },

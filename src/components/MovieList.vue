@@ -16,7 +16,10 @@
             {{ m.title }}
           </div>
           <div class="movies__item__content__info--year">
-            {{ m.releaseYear }}
+            Release year: {{ m.releaseYear }}
+          </div>
+          <div class="movies__item__content__info--rating">
+            imDb rating: {{ m.imDbRating }}
           </div>
         </div>
         <button
@@ -127,8 +130,12 @@ export default {
           font-weight: bold;
         }
 
-        &--year {
+        &--year,
+        &--rating {
+          color: rgb(142, 142, 142);
+
           font-size: 1rem;
+          font-weight: normal;
         }
       }
 
