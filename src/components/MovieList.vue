@@ -19,7 +19,7 @@
             Release year: {{ m.releaseYear }}
           </div>
           <div class="movies__item__content__info--rating">
-            IMDb rating: {{ m.imDbRating ? m.imDbRating : "N/A" }}
+            IMDb Rating: {{ m.imDbRating ? m.imDbRating : "N/A" }}
           </div>
         </div>
         <button

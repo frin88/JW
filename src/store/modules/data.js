@@ -28,7 +28,6 @@ const getters = {
       result.inWatchList = inWatchList ? true : false;
     });
 
-
     let orderedList = _orderBy(state.resultList, ["imDbRating"], ["desc"]);
 
     return orderedList;
@@ -43,13 +42,13 @@ const actions = {
   setResultList({ commit }, payload) {
     commit("setResultList", payload);
   },
-  async doSearch({ commit }, payload) {
-    //[TODO] - add loading indicator
+  async doSearch({ dispatch, commit }, payload) {
+    dispatch("ui/toggleLoader", { value: true }, { root: true });
     let res = await fetchMovies(payload);
-    //[TODO] - remove loading indicator
-    let p = res.results;
+    dispatch("ui/toggleLoader", { value: false }, { root: true });
+
     //[TODO] - add error handling based on response errorMessage
-    commit("setResultList", p);
+    commit("setResultList", res.results);
   },
 };
 

@@ -1,8 +1,14 @@
 <template>
   <div id="app">
     <Header></Header>
-    <MovieList class="movie-list" :actionable="true" v-if="movieList" :movieList="movieList"></MovieList>
+    <MovieList
+      class="movie-list"
+      :actionable="true"
+      v-if="!isLoading"
+      :movieList="movieList"
+    ></MovieList>
     <Modal></Modal>
+    <div class="empty" v-show="isLoading">Loading ..</div>
   </div>
 </template>
 
@@ -22,6 +28,7 @@ export default {
     ...mapGetters({
       movieList: "data/resultList",
       isModalOpen: "ui/isModalOpen",
+      isLoading: "ui/isLoading",
     }),
   },
 };
@@ -73,7 +80,6 @@ button {
   align-content: center;
   justify-content: center;
   transition: opacity 0.2s ease;
- 
 
   &:hover:not(:disabled) {
     cursor: pointer;
@@ -98,7 +104,11 @@ button {
   justify-content: center;
   align-items: center;
 }
-.movie-list{
+.movie-list {
   margin-top: 100px;
+}
+.empty {
+  color: #fff;
+  font-size: 1.5rem;
 }
 </style>

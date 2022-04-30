@@ -119,7 +119,7 @@ async function fetchMovies(searchTerm) {
   try {
     if (process.env.VUE_APP_STATIC_DATA === "true") {
       // this to avoid calling API too many times and just use static data
-      await new Promise((r) => setTimeout(r, 300));
+      await new Promise((r) => setTimeout(r, 500));
       return data;
     } else {
       let resp = await axios.get(
