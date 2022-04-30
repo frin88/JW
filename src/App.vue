@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header></Header>
-    <MovieList :actionable="true" v-if="movieList" :movieList="movieList"></MovieList>
+    <MovieList class="movie-list" :actionable="true" v-if="movieList" :movieList="movieList"></MovieList>
     <Modal></Modal>
   </div>
 </template>
@@ -73,6 +73,7 @@ button {
   align-content: center;
   justify-content: center;
   transition: opacity 0.2s ease;
+ 
 
   &:hover:not(:disabled) {
     cursor: pointer;
@@ -96,5 +97,8 @@ button {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.movie-list{
+  margin-top: 100px;
 }
 </style>

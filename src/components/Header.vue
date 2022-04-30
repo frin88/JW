@@ -36,5 +36,6 @@ export default {
   align-items: center;
 
   border-bottom: 1px solid #fff;
+
 }
 </style>

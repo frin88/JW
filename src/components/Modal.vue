@@ -2,7 +2,14 @@
   <transition name="slide">
     <div v-if="isModalOpen" class="modal">
       <button class="modal--close" @click="toggleModal()">X</button>
-      <MovieList :actionable="false" :movieList="movieList"></MovieList>
+      <MovieList
+        v-if="movieList.length > 0"
+        :actionable="false"
+        :movieList="movieList"
+      ></MovieList>
+      <div v-else class="modal__empty">
+        <p>No movies yet</p>
+      </div>
     </div>
   </transition>
 </template>
@@ -36,13 +43,19 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(73, 71, 71);
+  background-image: linear-gradient(315deg, #485461 0%, #28313b 74%);
   z-index: 2;
+  padding: 20px;
 
   &--close {
     position: absolute;
     top: 10px;
     right: 10px;
+  }
+
+  &__empty {
+    color: #fff;
+    font-size: 1.5rem;
   }
 }
 

@@ -40,7 +40,7 @@ If you don't finish in time, don't worry. Just send us what you could complete a
 
 **Bonus features:**
 
-- Be able to select and search for TV Shows as well
+- Be able to select and search for TV Shows as welln
 - Sort titles by rating (imDb, metacritic, rottenTomatoes, pick one!)
 
 ## API

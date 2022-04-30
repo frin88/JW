@@ -19,7 +19,11 @@
             {{ m.releaseYear }}
           </div>
         </div>
-        <button v-if="actionable" :disabled="m.inWatchList" @click="addToWatchList(m)">
+        <button
+          v-if="actionable"
+          :disabled="m.inWatchList"
+          @click="addToWatchList(m)"
+        >
           Add to Watchlist
         </button>
       </div>
@@ -56,18 +60,17 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
 
-  // justify-content: space-evenly;
   align-items: flex-start;
   height: 100%;
   width: 100%;
-  margin-top: 100px;
+
   overflow: auto;
   padding: 20px;
 
   &__item {
-    // flex-grow: 1;
     height: 300px;
-    width: 450px;
+    flex: calc(100% - 30px) 1 0;
+
     border: 1px solid rgb(142, 142, 142);
 
     background-color: transparent;
@@ -81,11 +84,19 @@ export default {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-
     margin: 15px;
 
+    @media (min-width: 801px) {
+      flex: calc(50% - 20px) 0 0;
+      margin: 10px;
+    }
+
+    @media (min-width: 1281px) {
+      flex: calc(33% - 20px) 0 0;
+    }
+
     &--cover {
-      min-width: 200px;
+      min-width: 180px;
       height: 90%;
       border-radius: 5px;
       flex-grow: 1;
