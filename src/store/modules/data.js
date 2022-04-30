@@ -1,4 +1,6 @@
 import { fetchMovies } from "../../services/data-service";
+import { orderBy as _orderBy } from "lodash";
+
 const state = {
   resultList: [],
   watchList: [],
@@ -15,7 +17,6 @@ const mutations = {
 
 const getters = {
   resultList: (state) => {
-
     //get release year from movie description
     const year_regex = /\((\d*?)\)/;
 
@@ -26,9 +27,11 @@ const getters = {
       let inWatchList = state.watchList.find((x) => x.id === result.id);
       result.inWatchList = inWatchList ? true : false;
     });
-    
 
-    return state.resultList;
+
+    let orderedList = _orderBy(state.resultList, ["imDbRating"], ["desc"]);
+
+    return orderedList;
   },
   watchList: (state) => state.watchList,
 };
@@ -41,13 +44,12 @@ const actions = {
     commit("setResultList", payload);
   },
   async doSearch({ commit }, payload) {
-
     //[TODO] - add loading indicator
     let res = await fetchMovies(payload);
     //[TODO] - remove loading indicator
-
+    let p = res.results;
     //[TODO] - add error handling based on response errorMessage
-    commit("setResultList", res.results);
+    commit("setResultList", p);
   },
 };
 

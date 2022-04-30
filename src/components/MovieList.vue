@@ -19,7 +19,7 @@
             Release year: {{ m.releaseYear }}
           </div>
           <div class="movies__item__content__info--rating">
-            imDb rating: {{ m.imDbRating }}
+            IMDb rating: {{ m.imDbRating ? m.imDbRating : "N/A" }}
           </div>
         </div>
         <button
@@ -128,12 +128,14 @@ export default {
         &--title {
           font-size: 1.5rem;
           font-weight: bold;
+          margin-bottom: 10px;
+          padding: 5px 0;
         }
 
         &--year,
         &--rating {
           color: rgb(142, 142, 142);
-
+          padding: 2px 0;
           font-size: 1rem;
           font-weight: normal;
         }
