@@ -115,50 +115,83 @@ let data = {
   errorMessage: "",
 };
 
-async function fetchMovies(searchTerm) {
+async function fetchData(APIParams) {
   try {
     if (process.env.VUE_APP_STATIC_DATA === "true") {
       // this to avoid calling API too many times and just use static data
       await new Promise((r) => setTimeout(r, 800));
       return data;
     } else {
-      let resp = await axios.get(
-        `${process.env.VUE_APP_IMDB_BASE_URL}SearchMovie/${process.env.VUE_APP_IMDB_API_KEY}/${searchTerm}`
-      );
+      const searchTerm = APIParams.searchTerm;
+      const searchType = APIParams.searchType;
+      let resp;
 
-      if (resp.data && resp.data.results) {
-        await fetchRatings(resp.data);
+      if (searchType === "movies") {
+        resp = await fetchMovies(searchTerm);
       }
-      
+
+      if (searchType === "series") {
+        resp = await fetchSeries(searchTerm);
+      }
+
+      // if (resp.data && resp.data.results) {
+      //   await fetchRatings(resp.data);
+      // }
+
       return resp.data;
     }
   } catch (ex) {
+    console.error("ooops something went wrong in fetchData", ex);
+  }
+}
+
+async function fetchMovies(searchTerm) {
+  try{
+    let resp = await axios.get(
+      `${process.env.VUE_APP_IMDB_BASE_URL}SearchMovie/${process.env.VUE_APP_IMDB_API_KEY}/${searchTerm}`
+    );
+  
+    return resp;
+  }
+  catch(ex){
     console.error("ooops something went wrong in fetchMovies", ex);
   }
+
 }
 
-async function fetchRatings(data) {
-  await Promise.all(
-    data.results.map(async (item) => {
-      const response = await fetchItemRating(item.id);
-
-      if (response.data && response.data.errorMessage === "") {
-        item.imDbRating = response.data.imDb;
-      }
-    })
-  );
-}
-
-async function fetchItemRating(id) {
+async function fetchSeries(searchTerm) {
   try {
     let resp = await axios.get(
-      `${process.env.VUE_APP_IMDB_BASE_URL}Ratings/${process.env.VUE_APP_IMDB_API_KEY}/${id}`
+      `${process.env.VUE_APP_IMDB_BASE_URL}SearchSeries/${process.env.VUE_APP_IMDB_API_KEY}/${searchTerm}`
     );
-    // console.log('id'  +  id + '--' + resp.data.imDb)
     return resp;
   } catch (ex) {
-    console.error("ooops something went wrong in getItemRating", ex);
+    console.error("ooops something went wrong in fetchSeries", ex);
   }
 }
 
-export { fetchMovies };
+// async function fetchRatings(data) {
+//   await Promise.all(
+//     data.results.map(async (item) => {
+//       const response = await fetchItemRating(item.id);
+
+//       if (response.data && response.data.errorMessage === "") {
+//         item.imDbRating = response.data.imDb;
+//       }
+//     })
+//   );
+// }
+
+// async function fetchItemRating(id) {
+//   try {
+//     let resp = await axios.get(
+//       `${process.env.VUE_APP_IMDB_BASE_URL}Ratings/${process.env.VUE_APP_IMDB_API_KEY}/${id}`
+//     );
+//     // console.log('id'  +  id + '--' + resp.data.imDb)
+//     return resp;
+//   } catch (ex) {
+//     console.error("ooops something went wrong in getItemRating", ex);
+//   }
+// }
+
+export { fetchData };

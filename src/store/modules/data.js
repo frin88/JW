@@ -1,10 +1,9 @@
-import { fetchMovies } from "../../services/data-service";
+import { fetchData } from "../../services/data-service";
 import { orderBy as _orderBy } from "lodash";
 
 const state = {
   resultList: [],
   watchList: [],
-
 };
 
 const mutations = {
@@ -14,7 +13,6 @@ const mutations = {
   setResultList(state, list) {
     state.resultList = list;
   },
- 
 };
 
 const getters = {
@@ -36,7 +34,6 @@ const getters = {
     return orderedList;
   },
   watchList: (state) => state.watchList,
-
 };
 
 const actions = {
@@ -44,15 +41,19 @@ const actions = {
     commit("addItemToWatchList", payload);
   },
 
-  async doSearch({ dispatch, commit }, payload) {
-    
+  async doSearch({ dispatch, commit, rootGetters }) {
 
-    //[TODO] - alternatively call API to get series based on ui selection
+    // read ui filters
+    const searchType = rootGetters["ui/searchType"];
+    const searchTerm = rootGetters["ui/searchTerm"];
 
     // set loader on
     dispatch("ui/toggleLoader", { value: true }, { root: true });
     // request data from API
-    let res = await fetchMovies(payload);
+    let res = await fetchData({
+      searchTerm: searchTerm,
+      searchType: searchType,
+    });
     // set loader off
     dispatch("ui/toggleLoader", { value: false }, { root: true });
 
@@ -62,8 +63,6 @@ const actions = {
 
     commit("setResultList", list);
     dispatch("ui/setErrorMsg", { value: errorMessage }, { root: true });
-
-
   },
 };
 
