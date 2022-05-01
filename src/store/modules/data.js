@@ -2,7 +2,7 @@ import { fetchData } from "../../services/data-service";
 import { orderBy as _orderBy } from "lodash";
 
 const state = {
-  resultList: [],
+  resultList: { movies: [], series: [] },
   watchList: [],
 };
 
@@ -10,26 +10,29 @@ const mutations = {
   addItemToWatchList(state, item) {
     state.watchList.push(item);
   },
-  setResultList(state, list) {
-    state.resultList = list;
+  setResultList(state, payload) {
+    state.resultList[payload.searchType] = payload.list;
   },
 };
 
 const getters = {
-  resultList: (state) => {
+  resultList: (state, getters, rootState, rootGetters) => {
+    const searchType = rootGetters["ui/searchType"];
+    const currentList = state.resultList[searchType];
+
     //get release year from movie description
     const year_regex = /\((\d*?)\)/;
 
-    state.resultList.map((result) => {
+    currentList.map((result) => {
       let Y = year_regex.exec(result.description);
       result.releaseYear = Y && Y[1] ? Y[1] : "";
 
       // get if item is in watchlist so button "add to watchlist" can be disabled
-      let inWatchList = state.watchList.find((x) => x.id === result.id);
+      const inWatchList = state.watchList.find((x) => x.id === result.id);
       result.inWatchList = inWatchList ? true : false;
     });
 
-    let orderedList = _orderBy(state.resultList, ["imDbRating"], ["desc"]);
+    const orderedList = _orderBy(currentList, ["imDbRating"], ["desc"]);
 
     return orderedList;
   },
@@ -42,7 +45,6 @@ const actions = {
   },
 
   async doSearch({ dispatch, commit, rootGetters }) {
-
     // read ui filters
     const searchType = rootGetters["ui/searchType"];
     const searchTerm = rootGetters["ui/searchTerm"];
@@ -50,18 +52,19 @@ const actions = {
     // set loader on
     dispatch("ui/toggleLoader", { value: true }, { root: true });
     // request data from API
-    let res = await fetchData({
+    const res = await fetchData({
       searchTerm: searchTerm,
       searchType: searchType,
     });
     // set loader off
     dispatch("ui/toggleLoader", { value: false }, { root: true });
 
+    // check results and errors
     const hasError = res.errorMessage !== "";
     const list = hasError ? [] : res.results;
     const errorMessage = hasError ? res.errorMessage : "";
 
-    commit("setResultList", list);
+    commit("setResultList", { list: list, searchType: searchType });
     dispatch("ui/setErrorMsg", { value: errorMessage }, { root: true });
   },
 };

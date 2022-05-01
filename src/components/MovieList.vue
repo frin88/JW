@@ -22,17 +22,14 @@
             IMDb Rating: {{ m.imDbRating ? m.imDbRating : "N/A" }}
           </div>
         </div>
-        <button
-          v-if="actionable"
-          :disabled="m.inWatchList"
-          @click="addToWatchList(m)"
-        >
+        <button v-if="actionable && !m.inWatchList" @click="addToWatchList(m)">
           Add to Watchlist
         </button>
+        <label v-if="m.inWatchList && actionable">In Watchlist!</label>
       </div>
     </div>
   </div>
-  <div class="movies__empty" v-else>{{emptyMsg}}</div>
+  <div class="movies__empty" v-else>{{ emptyMsg }}</div>
 </template>
 
 <script>
@@ -49,10 +46,10 @@ export default {
       type: Boolean,
       default: true,
     },
-    emptyMsg:{
+    emptyMsg: {
       type: String,
-      default: "No data"
-    }
+      default: "No data",
+    },
   },
 
   methods: {
@@ -147,7 +144,8 @@ export default {
         }
       }
 
-      button {
+      button,
+      label {
         align-self: flex-end;
       }
     }

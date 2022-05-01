@@ -47,13 +47,15 @@ const actions = {
   setErrorMsg({ commit }, payload) {
     commit("setErrorMsg", payload.value);
   },
-  setSearchType({ commit,dispatch }, payload) {
+  setSearchType({ commit, dispatch, getters }, payload) {
     commit("setSearchType", payload);
-
-    dispatch("data/doSearch", {}, { root: true });
+    if (getters.isSearchActive) {
+      dispatch("data/doSearch", {}, { root: true });
+    }
   },
   setSearchTerm({ commit, dispatch }, payload) {
     commit("setSearchTerm", payload);
+
     if (payload !== "") {
       dispatch("data/doSearch", {}, { root: true });
     }

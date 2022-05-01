@@ -115,12 +115,50 @@ let data = {
   errorMessage: "",
 };
 
+let data_tv = {
+  searchType: "SERIES",
+  expression: "day",
+  results: [
+    {
+      id: "tt1961485_",
+      resultType: "Title",
+      image:
+        "https://imdb-api.com/images/original/MV5BMGI2MzBhY2EtYzc1Ni00NTU4LWI5MTUtNzRiNGU3ZGQwOGRmXkEyXkFqcGdeQXVyMzU5OTE2NTI@._V1_Ratio0.7273_AL_.jpg",
+      title: "Day",
+      description: "(2011)",
+      imDbRating: "5.8",
+      year: "2011",
+      releaseYear: "2011",
+      inWatchList: false,
+    },
+    {
+      id: "tt1477172_",
+      resultType: "Title",
+      image: "https://imdb-api.com/images/original/nopicture.jpg",
+      title: "Day",
+      description: "(2009)",
+      imDbRating: "",
+      year: "2009",
+      releaseYear: "2009",
+      inWatchList: false,
+    },
+ 
+  ],
+  errorMessage: "",
+};
+
 async function fetchData(APIParams) {
   try {
     if (process.env.VUE_APP_STATIC_DATA === "true") {
       // this to avoid calling API too many times and just use static data
       await new Promise((r) => setTimeout(r, 800));
-      return data;
+
+      const searchType = APIParams.searchType;
+      if (searchType === "movies") {
+        return data;
+      } else {
+        return data_tv;
+      }
     } else {
       const searchTerm = APIParams.searchTerm;
       const searchType = APIParams.searchType;
@@ -146,17 +184,15 @@ async function fetchData(APIParams) {
 }
 
 async function fetchMovies(searchTerm) {
-  try{
+  try {
     let resp = await axios.get(
       `${process.env.VUE_APP_IMDB_BASE_URL}SearchMovie/${process.env.VUE_APP_IMDB_API_KEY}/${searchTerm}`
     );
-  
+
     return resp;
-  }
-  catch(ex){
+  } catch (ex) {
     console.error("ooops something went wrong in fetchMovies", ex);
   }
-
 }
 
 async function fetchSeries(searchTerm) {
