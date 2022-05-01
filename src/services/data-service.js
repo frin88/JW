@@ -142,7 +142,6 @@ let data_tv = {
       releaseYear: "2009",
       inWatchList: false,
     },
- 
   ],
   errorMessage: "",
 };
@@ -170,6 +169,10 @@ async function fetchData(APIParams) {
 
       if (searchType === "series") {
         resp = await fetchSeries(searchTerm);
+      }
+
+      if (resp.data && resp.data.results) {
+        await fetchRatings(resp.data);
       }
 
       return resp.data;
@@ -202,28 +205,28 @@ async function fetchSeries(searchTerm) {
   }
 }
 
-// async function fetchRatings(data) {
-//   await Promise.all(
-//     data.results.map(async (item) => {
-//       const response = await fetchItemRating(item.id);
+async function fetchRatings(data) {
+  await Promise.all(
+    data.results.map(async (item) => {
+      const response = await fetchItemRating(item.id);
 
-//       if (response.data && response.data.errorMessage === "") {
-//         item.imDbRating = response.data.imDb;
-//       }
-//     })
-//   );
-// }
+      if (response.data && response.data.errorMessage === "") {
+        item.imDbRating = response.data.imDb;
+      }
+    })
+  );
+}
 
-// async function fetchItemRating(id) {
-//   try {
-//     let resp = await axios.get(
-//       `${process.env.VUE_APP_IMDB_BASE_URL}Ratings/${process.env.VUE_APP_IMDB_API_KEY}/${id}`
-//     );
-//     // console.log('id'  +  id + '--' + resp.data.imDb)
-//     return resp;
-//   } catch (ex) {
-//     console.error("ooops something went wrong in getItemRating", ex);
-//   }
-// }
+async function fetchItemRating(id) {
+  try {
+    let resp = await axios.get(
+      `${process.env.VUE_APP_IMDB_BASE_URL}Ratings/${process.env.VUE_APP_IMDB_API_KEY}/${id}`
+    );
+    // console.log('id'  +  id + '--' + resp.data.imDb)
+    return resp;
+  } catch (ex) {
+    console.error("ooops something went wrong in getItemRating", ex);
+  }
+}
 
 export { fetchData };
