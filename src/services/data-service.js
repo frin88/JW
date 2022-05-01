@@ -172,10 +172,6 @@ async function fetchData(APIParams) {
         resp = await fetchSeries(searchTerm);
       }
 
-      // if (resp.data && resp.data.results) {
-      //   await fetchRatings(resp.data);
-      // }
-
       return resp.data;
     }
   } catch (ex) {
