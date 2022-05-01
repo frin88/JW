@@ -4,6 +4,7 @@ import { orderBy as _orderBy } from "lodash";
 const state = {
   resultList: [],
   watchList: [],
+
 };
 
 const mutations = {
@@ -13,6 +14,7 @@ const mutations = {
   setResultList(state, list) {
     state.resultList = list;
   },
+ 
 };
 
 const getters = {
@@ -24,6 +26,7 @@ const getters = {
       let Y = year_regex.exec(result.description);
       result.releaseYear = Y && Y[1] ? Y[1] : "";
 
+      // get if item is in watchlist so button "add to watchlist" can be disabled
       let inWatchList = state.watchList.find((x) => x.id === result.id);
       result.inWatchList = inWatchList ? true : false;
     });
@@ -33,22 +36,34 @@ const getters = {
     return orderedList;
   },
   watchList: (state) => state.watchList,
+
 };
 
 const actions = {
   addItemToWatchList({ commit }, payload) {
     commit("addItemToWatchList", payload);
   },
-  setResultList({ commit }, payload) {
-    commit("setResultList", payload);
-  },
+
   async doSearch({ dispatch, commit }, payload) {
+    
+
+    //[TODO] - alternatively call API to get series based on ui selection
+
+    // set loader on
     dispatch("ui/toggleLoader", { value: true }, { root: true });
+    // request data from API
     let res = await fetchMovies(payload);
+    // set loader off
     dispatch("ui/toggleLoader", { value: false }, { root: true });
 
-    //[TODO] - add error handling based on response errorMessage
-    commit("setResultList", res.results);
+    const hasError = res.errorMessage !== "";
+    const list = hasError ? [] : res.results;
+    const errorMessage = hasError ? res.errorMessage : "";
+
+    commit("setResultList", list);
+    dispatch("ui/setErrorMsg", { value: errorMessage }, { root: true });
+
+
   },
 };
 

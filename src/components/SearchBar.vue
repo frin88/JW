@@ -6,8 +6,6 @@
       type="search"
       v-model="userInput"
     />
-
-    <!-- <div>searching for {{ searchTerm }}</div> -->
   </div>
 </template>
 
@@ -29,23 +27,14 @@ export default {
       set(val) {
         if (this.timeout) clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
-     
-          if (val != "") {
-            this.searchTerm = val;
-            this.doSearch(val);
-          } else {
-            this.setResultList([]);
-          }
-
-          console.log(val);
+          this.setSearchTerm(val);
         }, 500);
       },
     },
   },
   methods: {
     ...mapActions({
-      doSearch: "data/doSearch",
-      setResultList: "data/setResultList",
+      setSearchTerm: "ui/setSearchTerm",
     }),
   },
 };

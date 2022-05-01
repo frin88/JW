@@ -1,6 +1,6 @@
 
-<template>
-  <div class="movies">
+<template >
+  <div class="movies" v-if="movieList.length > 0">
     <div v-for="m in movieList" class="movies__item" :key="m.id">
       <div
         role="img"
@@ -32,6 +32,7 @@
       </div>
     </div>
   </div>
+  <div class="movies__empty" v-else>{{emptyMsg}}</div>
 </template>
 
 <script>
@@ -48,7 +49,12 @@ export default {
       type: Boolean,
       default: true,
     },
+    emptyMsg:{
+      type: String,
+      default: "No data"
+    }
   },
+
   methods: {
     ...mapActions({
       addToWatchList: "data/addItemToWatchList",
@@ -145,6 +151,11 @@ export default {
         align-self: flex-end;
       }
     }
+  }
+
+  &__empty {
+    color: #fff;
+    font-size: 1.5rem;
   }
 }
 </style>

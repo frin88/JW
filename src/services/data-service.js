@@ -119,14 +119,17 @@ async function fetchMovies(searchTerm) {
   try {
     if (process.env.VUE_APP_STATIC_DATA === "true") {
       // this to avoid calling API too many times and just use static data
-      await new Promise((r) => setTimeout(r, 500));
+      await new Promise((r) => setTimeout(r, 800));
       return data;
     } else {
       let resp = await axios.get(
         `${process.env.VUE_APP_IMDB_BASE_URL}SearchMovie/${process.env.VUE_APP_IMDB_API_KEY}/${searchTerm}`
       );
 
-      await getRatings(resp.data);
+      if (resp.data && resp.data.results) {
+        await fetchRatings(resp.data);
+      }
+      
       return resp.data;
     }
   } catch (ex) {
@@ -134,24 +137,23 @@ async function fetchMovies(searchTerm) {
   }
 }
 
-async function getRatings(data) {
+async function fetchRatings(data) {
   await Promise.all(
     data.results.map(async (item) => {
-      const response = await getItemRating(item.id);
+      const response = await fetchItemRating(item.id);
 
-      if (response.data.errorMessage === "") {
+      if (response.data && response.data.errorMessage === "") {
         item.imDbRating = response.data.imDb;
       }
     })
   );
 }
 
-async function getItemRating(id) {
+async function fetchItemRating(id) {
   try {
     let resp = await axios.get(
       `${process.env.VUE_APP_IMDB_BASE_URL}Ratings/${process.env.VUE_APP_IMDB_API_KEY}/${id}`
     );
-
     // console.log('id'  +  id + '--' + resp.data.imDb)
     return resp;
   } catch (ex) {

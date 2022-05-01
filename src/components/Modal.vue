@@ -3,13 +3,11 @@
     <div v-if="isModalOpen" class="modal">
       <button class="modal--close" @click="toggleModal()">X</button>
       <MovieList
-        v-if="movieList.length > 0"
         :actionable="false"
-        :movieList="movieList"
+        :movieList="watchList"
+        emptyMsg="No movie in your watch list yet "
       ></MovieList>
-      <div v-else class="modal__empty">
-        <p>No movies yet</p>
-      </div>
+
     </div>
   </transition>
 </template>
@@ -23,7 +21,7 @@ export default {
 
   computed: {
     ...mapGetters({
-      movieList: "data/watchList",
+      watchList: "data/watchList",
       isModalOpen: "ui/isModalOpen",
     }),
   },
@@ -60,15 +58,15 @@ export default {
 }
 
 .slide-enter-active {
-  animation: slide-in 0.5s;
+  animation: slide-in 0.8s;
 }
 .slide-leave-active {
-  animation: slide-in 0.5s reverse;
+  animation: slide-in 0.8s reverse;
 }
 
 @keyframes slide-in {
   from {
-    transform: translateX(calc(-1 * 100vw));
+    transform: translateX( -100vw);
   }
   to {
     transform: translateX(0);

@@ -2,13 +2,16 @@
   <div id="app">
     <Header></Header>
     <MovieList
+      v-if="isSearchActive && !isLoading && !isError"
       class="movie-list"
       :actionable="true"
-      v-if="!isLoading"
-      :movieList="movieList"
+      :movieList="resultList"
+      emptyMsg="No results found"
     ></MovieList>
+    <div class="loading" v-if="isLoading">Loading ...</div>
+    <div class="error" v-if="isError">{{ errorMsg }}</div>
+    
     <Modal></Modal>
-    <div class="empty" v-show="isLoading">Loading ..</div>
   </div>
 </template>
 
@@ -26,9 +29,12 @@ export default {
   },
   computed: {
     ...mapGetters({
-      movieList: "data/resultList",
+      resultList: "data/resultList",
+      isSearchActive: "ui/isSearchActive",
       isModalOpen: "ui/isModalOpen",
       isLoading: "ui/isLoading",
+      isError: "ui/isError",
+      errorMsg: "ui/errorMsg",
     }),
   },
 };
@@ -107,7 +113,8 @@ button {
 .movie-list {
   margin-top: 100px;
 }
-.empty {
+.loading,
+.error {
   color: #fff;
   font-size: 1.5rem;
 }
