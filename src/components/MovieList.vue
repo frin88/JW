@@ -23,9 +23,9 @@
           </div>
         </div>
         <button v-if="actionable && !m.inWatchList" @click="addToWatchList(m)">
-          Add to Watchlist
+          Select Title
         </button>
-        <label v-if="m.inWatchList && actionable">In Watchlist!</label>
+        <label v-if="m.inWatchList && actionable">Selected!</label>
       </div>
     </div>
   </div>

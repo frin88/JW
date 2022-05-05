@@ -55,3 +55,6 @@ GET /API/SearchMovie/{apiKey}/{expression}
 GET /API/SearchSeries/{apiKey}/{expression}
 GET /API/Ratings/{apiKey}/{id}
 ```
+
+## LINK
+App delpoyed via Netlify at: https://zesty-pasca-8430bb.netlify.app/

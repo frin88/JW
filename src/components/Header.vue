@@ -7,7 +7,7 @@
         :content="switcherItems"
       ></ContentSwitcher>
     </div>
-    <button @click="openModal()">Your Watchlist</button>
+    <button @click="openModal()">Selected Titles</button>
   </header>
 </template>
 <script>
